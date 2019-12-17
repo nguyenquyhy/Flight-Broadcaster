@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29609.76
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlightBroadcaster.Wpf", "FlightBroadcaster.Wpf\FlightBroadcaster.Wpf.csproj", "{B1945184-4562-47EF-AB2C-06BB500FAF33}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlightBroadcaster.SimConnectFSX", "FlightBroadcaster.SimConnectFSX\FlightBroadcaster.SimConnectFSX.csproj", "{72C6577C-DD29-4F07-A6C8-76158A16A2E8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B1945184-4562-47EF-AB2C-06BB500FAF33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1945184-4562-47EF-AB2C-06BB500FAF33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1945184-4562-47EF-AB2C-06BB500FAF33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1945184-4562-47EF-AB2C-06BB500FAF33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72C6577C-DD29-4F07-A6C8-76158A16A2E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72C6577C-DD29-4F07-A6C8-76158A16A2E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72C6577C-DD29-4F07-A6C8-76158A16A2E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72C6577C-DD29-4F07-A6C8-76158A16A2E8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BCB33A76-37D5-4A40-AC91-EF874922731A}
+	EndGlobalSection
+EndGlobal

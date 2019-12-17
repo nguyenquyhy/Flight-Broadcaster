@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <PackageId>FlightBroadcaster</PackageId>
+    <Authors>Nguyen Quy Hy</Authors>
+    <Company />
+    <Product>Flight Broadcaster</Product>
+    <Description>Broadcast GPS information to network via a UDP port</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FlightBroadcaster.SimConnectFSX\FlightBroadcaster.SimConnectFSX.csproj" />
+  </ItemGroup>
+
+</Project>
