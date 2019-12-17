@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FlightBroadcaster.Wpf"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="400" FontSize="14"
+        Title="Flight Broadcast" Height="280" Width="300" FontSize="14"
         Loaded="Window_Loaded" Unloaded="Window_Unloaded">
     <Grid>
         <Grid.RowDefinitions>
