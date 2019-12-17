@@ -5,13 +5,57 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FlightBroadcaster.Wpf"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="400" FontSize="14"
+        Loaded="Window_Loaded" Unloaded="Window_Unloaded">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Broadcast" />
+        <TextBlock Text="Flight Broadcast" FontSize="30" HorizontalAlignment="Center" />
+
+        <Grid Grid.Row="1" Margin="20,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="Simulator" Grid.Row="0" Grid.Column="0" />
+            <TextBlock Text="{Binding SimConnectionStatus}" Grid.Row="0" Grid.Column="1" />
+
+            <TextBlock Text="Latitude" Grid.Row="1" Grid.Column="0" />
+            <TextBox Text="{Binding FlightStatus.Latitude}" Grid.Row="1" Grid.Column="1" IsReadOnly="True" />
+            
+            <TextBlock Text="Longitude" Grid.Row="2" Grid.Column="0" />
+            <TextBox Text="{Binding FlightStatus.Longitude}" Grid.Row="2" Grid.Column="1" IsReadOnly="True" />
+
+            <TextBlock Text="Altitude" Grid.Row="3" Grid.Column="0" />
+            <TextBox Text="{Binding FlightStatus.Altitude}" Grid.Row="3" Grid.Column="1" IsReadOnly="True" />
+
+            <TextBlock Text="Heading" Grid.Row="4" Grid.Column="0" />
+            <TextBox Text="{Binding FlightStatus.Heading}" Grid.Row="4" Grid.Column="1" IsReadOnly="True" />
+
+            <TextBlock Text="True Heading" Grid.Row="5" Grid.Column="0" />
+            <TextBox Text="{Binding FlightStatus.TrueHeading}" Grid.Row="5" Grid.Column="1" IsReadOnly="True" />
+
+            <TextBlock Text="Pitch" Grid.Row="6" Grid.Column="0" />
+            <TextBox Text="{Binding FlightStatus.Pitch}" Grid.Row="6" Grid.Column="1" IsReadOnly="True" />
+
+            <TextBlock Text="Bank" Grid.Row="7" Grid.Column="0" />
+            <TextBox Text="{Binding FlightStatus.Bank}" Grid.Row="7" Grid.Column="1" IsReadOnly="True" />
+        </Grid>
     </Grid>
 </Window>

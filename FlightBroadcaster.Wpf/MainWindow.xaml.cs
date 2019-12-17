@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using FlightBroadcaster.SimConnectFSX;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Net;
+using System.Net.Sockets;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace FlightBroadcaster.Wpf
 {
@@ -20,9 +13,53 @@ namespace FlightBroadcaster.Wpf
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        private const int DefaultUdpPort = 49002;
+        private readonly MainViewModel viewModel;
+        private readonly ILogger<MainWindow> logger;
+        private UdpClient client = null;
+        private bool isReady = false;
+
+        public MainWindow(MainViewModel viewModel, FlightConnect flightConnect, ILogger<MainWindow> logger)
         {
             InitializeComponent();
+
+            DataContext = viewModel;
+            flightConnect.FlightStatusUpdated += FlightConnect_FlightStatusUpdated;
+            this.viewModel = viewModel;
+            this.logger = logger;
+        }
+
+        private async void FlightConnect_FlightStatusUpdated(object sender, FlightStatusUpdatedEventArgs e)
+        {
+            viewModel.FlightStatus = e.FlightStatus;
+
+            if (isReady)
+            {
+                try
+                {
+                    var gpsData = Encoding.UTF8.GetBytes($"XGPSFS2020,{e.FlightStatus.Longitude},{e.FlightStatus.Latitude},{e.FlightStatus.Altitude},{e.FlightStatus.Heading},{e.FlightStatus.IndicatedAirSpeed}");
+                    var statusData = Encoding.UTF8.GetBytes($"XATTFS2020,{e.FlightStatus.TrueHeading},{e.FlightStatus.Pitch},{e.FlightStatus.Bank}");
+                    await client?.SendAsync(gpsData, gpsData.Length);
+                    await client?.SendAsync(statusData, statusData.Length);
+                }
+                catch (Exception ex)
+                {
+                    logger.LogError(ex, "Cannot send flight status!");
+                }
+            }
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            client = new UdpClient(new IPEndPoint(IPAddress.Any, DefaultUdpPort));
+            client.EnableBroadcast = true;
+            client.Connect(new IPEndPoint(IPAddress.Broadcast, DefaultUdpPort));
+            isReady = true;
+        }
+
+        private void Window_Unloaded(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using FlightBroadcaster.SimConnectFSX;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace FlightBroadcaster.Wpf
@@ -27,6 +28,9 @@ namespace FlightBroadcaster.Wpf
         }
 
         private ConnectionState simConnectionState = ConnectionState.Idle;
-        public ConnectionState SimConnectionState { get { return simConnectionState; } set { SetProperty(ref simConnectionState, value); } }
+        public ConnectionState SimConnectionState { get => simConnectionState; set => SetProperty(ref simConnectionState, value); }
+
+        private FlightStatus flightStatus = null;
+        public FlightStatus FlightStatus { get => flightStatus; set => SetProperty(ref flightStatus, value); }
     }
 }
