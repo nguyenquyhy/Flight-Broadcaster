@@ -9,6 +9,7 @@
     <Company />
     <Product>Flight Broadcaster</Product>
     <Description>Broadcast GPS information to network via a UDP port</Description>
+    <Version>0.1.0</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
