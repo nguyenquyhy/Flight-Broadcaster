@@ -4,19 +4,32 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FlightBroadcaster.Wpf"
-        mc:Ignorable="d"
-        Title="Flight Broadcast" Height="280" Width="300" FontSize="14"
+        mc:Ignorable="d" 
+        WindowStyle="SingleBorderWindow" ResizeMode="NoResize"
+        Title="Flight Broadcast" Height="220" Width="300" FontSize="14"
+        MouseDown="Window_MouseDown" Cursor="ScrollAll"
         Loaded="Window_Loaded" Unloaded="Window_Unloaded">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Flight Broadcast" FontSize="30" HorizontalAlignment="Center" />
+        <Button Content="&lt;" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Button_Click" Cursor="Hand"
+                ToolTip="Compact mode &amp; Stay on top" Width="24" Height="24" BorderThickness="0" 
+                Visibility="{Binding IsCompact, Converter={StaticResource TrueToCollapsedConverter}}" />
+        
+        <Button Content="&gt;" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Button_Click" Cursor="Hand"
+                ToolTip="Full mode" Width="24" Height="24" BorderThickness="0" 
+                Visibility="{Binding IsCompact, Converter={StaticResource TrueToVisibleConverter}}" />
+        
+        <StackPanel Orientation="Horizontal" Visibility="{Binding IsCompact, Converter={StaticResource TrueToVisibleConverter}}" VerticalAlignment="Top"
+                    Margin="26,2,0,0">
+            <TextBox Text="{Binding FlightStatus.Latitude}" Grid.Row="1" Grid.Column="1" IsReadOnly="True" Width="100" Margin="0,0,2,0" />
+            <TextBox Text="{Binding FlightStatus.Longitude}" Grid.Row="2" Grid.Column="1" IsReadOnly="True" Width="100" />
+        </StackPanel>
 
-        <Grid Grid.Row="1" Margin="20,20">
+        <Grid Grid.Row="0" Margin="26,4" Visibility="{Binding IsCompact, Converter={StaticResource TrueToCollapsedConverter}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="100" />
                 <ColumnDefinition Width="*" />
@@ -34,7 +47,7 @@
             </Grid.RowDefinitions>
 
             <TextBlock Text="Simulator" Grid.Row="0" Grid.Column="0" />
-            <TextBlock Text="{Binding SimConnectionStatus}" Grid.Row="0" Grid.Column="1" />
+            <TextBlock Text="{Binding SimConnectionState}" Grid.Row="0" Grid.Column="1" />
 
             <TextBlock Text="Latitude" Grid.Row="1" Grid.Column="0" />
             <TextBox Text="{Binding FlightStatus.Latitude}" Grid.Row="1" Grid.Column="1" IsReadOnly="True" />

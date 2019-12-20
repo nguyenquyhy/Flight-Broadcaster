@@ -5,6 +5,8 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace FlightBroadcaster.Wpf
 {
@@ -51,8 +53,10 @@ namespace FlightBroadcaster.Wpf
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            client = new UdpClient(new IPEndPoint(IPAddress.Any, DefaultUdpPort));
-            client.EnableBroadcast = true;
+            client = new UdpClient(new IPEndPoint(IPAddress.Any, DefaultUdpPort))
+            {
+                EnableBroadcast = true
+            };
             client.Connect(new IPEndPoint(IPAddress.Broadcast, DefaultUdpPort));
             isReady = true;
         }
@@ -60,6 +64,35 @@ namespace FlightBroadcaster.Wpf
         private void Window_Unloaded(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            button.IsEnabled = false;
+            viewModel.IsCompact = !viewModel.IsCompact;
+
+            if (viewModel.IsCompact)
+            {
+                App.Current.MainWindow.WindowStyle = WindowStyle.None;
+                App.Current.MainWindow.Topmost = true;
+                Height = 24;
+                Width = 230;
+            }
+            else
+            {
+                App.Current.MainWindow.WindowStyle = WindowStyle.SingleBorderWindow;
+                App.Current.MainWindow.Topmost = false;
+                Height = 220;
+                Width = 300;
+            }
+            button.IsEnabled = true;
+        }
+
+        private void Window_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                this.DragMove();
         }
     }
 }

@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:FlightBroadcaster.Wpf">
     <Application.Resources>
-         
+        <local:BooleanToVisibilityConverter x:Key="TrueToVisibleConverter" />
+        <local:BooleanToVisibilityConverter x:Key="TrueToCollapsedConverter" Reversed="True" />
     </Application.Resources>
 </Application>

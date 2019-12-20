@@ -32,5 +32,8 @@ namespace FlightBroadcaster.Wpf
 
         private FlightStatus flightStatus = null;
         public FlightStatus FlightStatus { get => flightStatus; set => SetProperty(ref flightStatus, value); }
+
+        private bool isCompact = false;
+        public bool IsCompact { get => isCompact; set => SetProperty(ref isCompact, value); }
     }
 }
