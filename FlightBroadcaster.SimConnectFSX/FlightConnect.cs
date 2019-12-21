@@ -1,7 +1,7 @@
-﻿using FlightBroadcaster.Core;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Microsoft.FlightSimulator.SimConnect;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace FlightBroadcaster.SimConnectFSX
@@ -20,6 +20,7 @@ namespace FlightBroadcaster.SimConnectFSX
         public IntPtr Handle { get; private set; }
 
         private SimConnect simconnect = null;
+        private CancellationTokenSource cts = null;
 
         public FlightConnect(ILogger<FlightConnect> logger)
         {
@@ -78,6 +79,15 @@ namespace FlightBroadcaster.SimConnectFSX
         {
             try
             {
+                cts?.Cancel();
+                cts = null;
+            }
+            catch (Exception ex)
+            {
+                logger.LogWarning(ex, $"Cannot cancel request loop! Error: {ex.Message}");
+            }
+            try
+            {
                 if (simconnect != null)
                 {
                     // Dispose serves the same purpose as SimConnect_Close()
@@ -87,7 +97,7 @@ namespace FlightBroadcaster.SimConnectFSX
             }
             catch (Exception ex)
             {
-                logger.LogWarning($"Cannot unsubscribe events! Error: {ex.Message}");
+                logger.LogWarning(ex, $"Cannot unsubscribe events! Error: {ex.Message}");
             }
         }
 
@@ -235,6 +245,7 @@ namespace FlightBroadcaster.SimConnectFSX
 
                         if (flightStatus.HasValue)
                         {
+                            logger.LogDebug("Get Flight status");
                             FlightStatusUpdated?.Invoke(this, new FlightStatusUpdatedEventArgs(
                                 new FlightStatus
                                 {
@@ -263,9 +274,6 @@ namespace FlightBroadcaster.SimConnectFSX
                             // Cast failed
                             logger.LogError("Cannot cast to FlightStatusStruct!");
                         }
-
-                        await Task.Delay(StatusDelayMilliseconds);
-                        simconnect?.RequestDataOnSimObjectType(DATA_REQUESTS.FLIGHT_STATUS, DEFINITIONS.FlightStatus, 0, SIMCONNECT_SIMOBJECT_TYPE.USER);
                     }
                     break;
             }
@@ -274,7 +282,22 @@ namespace FlightBroadcaster.SimConnectFSX
         void simconnect_OnRecvOpen(SimConnect sender, SIMCONNECT_RECV_OPEN data)
         {
             logger.LogInformation("Connected to Flight Simulator");
-            simconnect.RequestDataOnSimObjectType(DATA_REQUESTS.FLIGHT_STATUS, DEFINITIONS.FlightStatus, 0, SIMCONNECT_SIMOBJECT_TYPE.USER);
+
+            cts?.Cancel();
+            cts = new CancellationTokenSource();
+            Task.Run(async () =>
+            {
+                try
+                {
+                    while (true)
+                    {
+                        await Task.Delay(StatusDelayMilliseconds);
+                        cts?.Token.ThrowIfCancellationRequested();
+                        simconnect?.RequestDataOnSimObjectType(DATA_REQUESTS.FLIGHT_STATUS, DEFINITIONS.FlightStatus, 0, SIMCONNECT_SIMOBJECT_TYPE.USER);
+                    }
+                }
+                catch (TaskCanceledException) { }
+            });
         }
 
         // The case where the user closes Flight Simulator
