@@ -39,8 +39,8 @@ namespace FlightBroadcaster.Wpf
             {
                 try
                 {
-                    var gpsData = Encoding.UTF8.GetBytes($"XGPSFS2020,{e.FlightStatus.Longitude},{e.FlightStatus.Latitude},{e.FlightStatus.Altitude},{e.FlightStatus.Heading},{e.FlightStatus.IndicatedAirSpeed}");
-                    var statusData = Encoding.UTF8.GetBytes($"XATTFS2020,{e.FlightStatus.TrueHeading},{e.FlightStatus.Pitch},{e.FlightStatus.Bank}");
+                    var gpsData = Encoding.UTF8.GetBytes($"XGPSFS2020,{e.FlightStatus.Longitude},{e.FlightStatus.Latitude},{e.FlightStatus.Altitude},{e.FlightStatus.TrueHeading},{e.FlightStatus.GroundSpeed}");
+                    var statusData = Encoding.UTF8.GetBytes($"XATTFS2020,{e.FlightStatus.TrueHeading},{-e.FlightStatus.Pitch},{-e.FlightStatus.Bank}");
                     await client?.SendAsync(gpsData, gpsData.Length);
                     await client?.SendAsync(statusData, statusData.Length);
                 }
@@ -89,7 +89,7 @@ namespace FlightBroadcaster.Wpf
             button.IsEnabled = true;
         }
 
-        private void Window_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
                 this.DragMove();

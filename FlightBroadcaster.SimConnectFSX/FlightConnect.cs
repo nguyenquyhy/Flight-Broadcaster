@@ -124,7 +124,7 @@ namespace FlightBroadcaster.SimConnectFSX
                 SimConnect.SIMCONNECT_UNUSED);
             simconnect.AddToDataDefinition(DEFINITIONS.FlightStatus,
                 "PLANE ALTITUDE",
-                "Feet",
+                "Meter",
                 SIMCONNECT_DATATYPE.FLOAT64,
                 0.0f,
                 SimConnect.SIMCONNECT_UNUSED);

@@ -55,7 +55,7 @@
             <TextBlock Text="Longitude" Grid.Row="2" Grid.Column="0" />
             <TextBox Text="{Binding FlightStatus.Longitude}" Grid.Row="2" Grid.Column="1" IsReadOnly="True" />
 
-            <TextBlock Text="Altitude" Grid.Row="3" Grid.Column="0" />
+            <TextBlock Text="Altitude (m)" Grid.Row="3" Grid.Column="0" />
             <TextBox Text="{Binding FlightStatus.Altitude}" Grid.Row="3" Grid.Column="1" IsReadOnly="True" />
 
             <TextBlock Text="Heading" Grid.Row="4" Grid.Column="0" />
