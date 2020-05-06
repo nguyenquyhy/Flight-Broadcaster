@@ -9,15 +9,13 @@
     <Company />
     <Product>Flight Broadcaster</Product>
     <Description>Broadcast GPS information to network via a UDP port</Description>
-    <Version>1.1.0</Version>
+    <Version>1.2.0</Version>
     <PackageIcon>icon.png</PackageIcon>
     <PackageIconUrl />
     <ApplicationIcon>icon.ico</ApplicationIcon>
     <PackageProjectUrl>https://github.com/nguyenquyhy/Flight-Broadcaster</PackageProjectUrl>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <PlatformTarget>x86</PlatformTarget>
+    <NoWin32Manifest>true</NoWin32Manifest>
   </PropertyGroup>
 
   <ItemGroup>
@@ -36,6 +34,12 @@
     <None Include="icon.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="FlightBroadcaster.Wpf.exe.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 
