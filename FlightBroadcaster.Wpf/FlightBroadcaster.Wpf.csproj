@@ -9,7 +9,7 @@
     <Company />
     <Product>Flight Broadcaster</Product>
     <Description>Broadcast GPS information to network via a UDP port</Description>
-    <Version>1.2.0</Version>
+    <Version>1.2.1</Version>
     <PackageIcon>icon.png</PackageIcon>
     <PackageIconUrl />
     <ApplicationIcon>icon.ico</ApplicationIcon>

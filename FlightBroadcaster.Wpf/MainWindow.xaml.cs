@@ -16,6 +16,8 @@ namespace FlightBroadcaster.Wpf
     public partial class MainWindow : Window
     {
         private const int DefaultUdpPort = 49002;
+        private const double KnotsToMetersPerSecond = 0.51444444444;
+
         private readonly MainViewModel viewModel;
         private readonly ILogger<MainWindow> logger;
         private UdpClient client = null;
@@ -39,7 +41,7 @@ namespace FlightBroadcaster.Wpf
             {
                 try
                 {
-                    var gpsData = Encoding.UTF8.GetBytes($"XGPSFS2020,{e.FlightStatus.Longitude},{e.FlightStatus.Latitude},{e.FlightStatus.Altitude},{e.FlightStatus.TrueHeading},{e.FlightStatus.GroundSpeed}");
+                    var gpsData = Encoding.UTF8.GetBytes($"XGPSFS2020,{e.FlightStatus.Longitude},{e.FlightStatus.Latitude},{e.FlightStatus.Altitude},{e.FlightStatus.TrueHeading},{e.FlightStatus.GroundSpeed * KnotsToMetersPerSecond}");
                     var statusData = Encoding.UTF8.GetBytes($"XATTFS2020,{e.FlightStatus.TrueHeading},{-e.FlightStatus.Pitch},{-e.FlightStatus.Bank}");
                     await client?.SendAsync(gpsData, gpsData.Length);
                     await client?.SendAsync(statusData, statusData.Length);
